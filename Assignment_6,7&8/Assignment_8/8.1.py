@@ -11,7 +11,6 @@ from scipy.fft import fft, ifft
 import random
 from numpy.random import random_sample
 import scipy.integrate as integrate
-#assuming you don't want me to just use default random
 
 #a = 7**5
 #b = 0
@@ -49,7 +48,7 @@ import scipy.integrate as integrate
 #    i += 1
     
 #print('Random integer:',C)
-print('For a random integer outcome with weight p(x)=x^-1:')
+print('For a random discrete integer outcome with weight p(x)=x^-1:')
 def weighted_values(values, probabilities, size):
     bins = np.add.accumulate(probabilities)                     #This creates the bins 
     return values[np.digitize(random_sample(size), bins)]       #This sees which bin the number falls into and returns the corresponding value
@@ -67,11 +66,11 @@ for i in range(1,T):
 #print(values[T-1])  #test
 #print(probabilities) #test
 
-#probabilities[0] = 1     #For whatever reason, this indexed value was showing up as zero before so I'm just manually making it 1 here. Fixed.
+#probabilities[0] = 1     #For whatever reason, this indexed value was showing up as zero before so I'm just manually making it 1 here. Fixed?
 probabilities[:] = [x/total for x in probabilities] #Here I divide each value by total sum of probabilities to normalize each probability. 
 
 
-print('Random integer between 1 and 500:',weighted_values(values, probabilities, 1))
+print('(Between 1 and 500)',weighted_values(values, probabilities, 1))
 
 #print('For a random continuous outcome with weight p(x)=x^-1:')
 
@@ -110,6 +109,8 @@ for i in range(1,T):
     total += probabilities[i]
 #probabilities[0] = 1
 probabilities[:] = [x/total for x in probabilities]
+#print(probabilities)
+#probabilities[0]=1/total
 result = weighted_values(values, probabilities, 10**5)
 
 
