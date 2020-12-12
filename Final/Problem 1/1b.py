@@ -12,13 +12,14 @@ from scipy.fft import fft, ifft
 from random import seed
 from random import randint as rand
 from random import random as random
+from scipy.integrate import odeint
 
-#Analytically predicted steady state solution: n = C*exp(-fx/BD) where my B = Xi as given.
+#Analytically predicted steady state solution: n = C*exp(-fx/BD) where my B = Xi(?) as given.
 #Given FPE: dn/dt = D(d2n/dx2)+(1/B)(d/dx)(n*dU/dx) where U=-fx
 
-C = 1  #initial condition for n
-f = 2
-B = 2 
+C = 1  #initial condition for n. Letting it be 1 for simplicity
+f = 1
+B = 1 
 kbT = 300*1.3807*10**-23 #Boltzmann's Constant * 300 Kelvin
 T = 1000
 D = kbT/B
@@ -28,35 +29,55 @@ dt = 0.01
 niter = T/dt
 
 #* Initialize parameters (time step, grid spacing, etc.).
-tau = float(input('Enter time step: '))
-N = int(input('Enter the number of grid points: '))
-N=N+2  #virtual points on either side
+#tau = float(input('Enter time step: '))
+#N = int(input('Enter the number of grid points: '))
+#N=N+2  #virtual points on either side
 
-L = 1.        # The system extends from x=-L/2 to x=L/2
-h = L/(N-1)   # Grid size
-kappa = 1.    # Diffusion coefficient
-coeff = kappa*tau/h**2
-if coeff < 0.5 :
-    print('Solution is expected to be stable')
-else:
-    print('WARNING: Solution is expected to be unstable')
+#L = 1.        # The system extends from x=-L/2 to x=L/2
+#h = L/(N-1)   # Grid size
+#kappa = 1.    # Diffusion coefficient
+#coeff = kappa*tau/h**2
+#if coeff < 0.5 :
+#    print('Solution is expected to be stable')
+#else:
+#    print('WARNING: Solution is expected to be unstable')
+
+def f(u,x):
+    return (u[1],u[1])
+y0 = [0,0]
+xs = np.linspace(0,T,1000)
+us = odeint(f,y0,xs)
+ys = us[:,0]
+
+
+print('This was working before but now I have solid horizontal line at n=0...ctr-Z unable to save me. It is now 10 AM and I am exahausted.')
+print('Still have not figured out 3d&e and now my brain is too fried to fix whatever I neglected to save for number 1.')
+
+n = np.zeros(int(niter))
+n[0] = C
+nsum = C
+for niter in range(T):
+    n[niter] = nsum + ys[niter]
+    nsum += n[niter]
+
+plt.plot(xs,ys,'-')
+plt.plot(xs,ys,'r*')
+plt.xlabel('x values')
+plt.ylabel('n vales')
+plt.title('dn/dt = 0 = D(d2n/dx2)+(1/B)(d/dx)(n*dU/dx)')
+plt.show()
+
 
 #* Set initial and boundary conditions.
 #Placeholder
 ## The boundary conditions are dn[1/2]/dx = dn[-1/2]/dx = 0
 
 #* Set up loop and plot variables.
-xplot = np.arange(N-2)*h - L/2+h    # Record the x scale for plots
-iplot = 0                        # Counter used to count plots
-nstep = 300                      # Maximum number of iterations
-nplots = 100                     # Number of snapshots (plots) to take
-plot_step = nstep/nplots         # Number of time steps between plots
-
-
-
-
-
-
+#xplot = np.arange(N-2)*h - L/2+h    # Record the x scale for plots
+#iplot = 0                        # Counter used to count plots
+#nstep = 300                      # Maximum number of iterations
+#nplots = 100                     # Number of snapshots (plots) to take
+#plot_step = nstep/nplots         # Number of time steps between plots
 
 
 #n0 = C*np.exp((-f*x0)/(B*D))
@@ -104,6 +125,6 @@ plot_step = nstep/nplots         # Number of time steps between plots
 #	return Y				
 #forward time centered diferrential 
 
-X=np.array(x0,dtype=float)
+#X=np.array(x0,dtype=float)
 
 

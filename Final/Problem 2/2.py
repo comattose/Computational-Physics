@@ -16,7 +16,7 @@ x = np.arange(N)*h - L/2.  # Coordinates  of grid points
 h_bar = 1.              # Natural units
 mass = 1.               # Natural units
 tau = float(input('Enter time step: '))
-V[999] = 1000
+V[999] = 10000
 print(V)
 #* Set up the Hamiltonian operator matrix
 ham = np.zeros((N,N))     # Set all elements to zero
