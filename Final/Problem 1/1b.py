@@ -13,7 +13,7 @@ from random import seed
 from random import randint as rand
 from random import random as random
 
-#Analytically predicted steady state solution: n = C*exp(-fx/BD) where B is Xi.
+#Analytically predicted steady state solution: n = C*exp(-fx/BD) where my B = Xi as given.
 #Given FPE: dn/dt = D(d2n/dx2)+(1/B)(d/dx)(n*dU/dx) where U=-fx
 
 C = 1  #initial condition for n

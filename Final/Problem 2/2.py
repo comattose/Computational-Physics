@@ -5,7 +5,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-V[1000] = 1000
+V =np.zeros(1000)
+
 #* Initialize parameters (grid spacing, time step, etc.)
 i_imag = 1j             # Imaginary i
 N = int(input('Enter number of grid points: '));
@@ -15,7 +16,8 @@ x = np.arange(N)*h - L/2.  # Coordinates  of grid points
 h_bar = 1.              # Natural units
 mass = 1.               # Natural units
 tau = float(input('Enter time step: '))
-
+V[999] = 1000
+print(V)
 #* Set up the Hamiltonian operator matrix
 ham = np.zeros((N,N))     # Set all elements to zero
 coeff = -h_bar**2/(2*mass*h**2)
